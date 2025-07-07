@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 def landing(request):
-    return render(request, 'landing.html')
+    return render(request, 'landing.html', {'star_range': range(30), 'landing': True})
 
 def upload(request):
     return render(request, 'upload.html')

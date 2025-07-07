@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Results</h2>
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-dark text-white text-center mb-3">
+            <div class="card-body">
+                <p class="card-text">Original</p>
+                <img src="https://via.placeholder.com/120x120?text=Original" class="img-fluid rounded mb-2" alt="Original">
+                <a href="#" class="btn btn-outline-light btn-sm">Download</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-dark text-white text-center mb-3">
+            <div class="card-body">
+                <p class="card-text">Super-Resolved</p>
+                <img src="https://via.placeholder.com/120x120?text=SR" class="img-fluid rounded mb-2" alt="Super-Resolved">
+                <a href="#" class="btn btn-outline-light btn-sm">Download</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-dark text-white text-center mb-3">
+            <div class="card-body">
+                <p class="card-text">Ground Truth</p>
+                <img src="https://via.placeholder.com/120x120?text=GT" class="img-fluid rounded mb-2" alt="GT">
+                <a href="#" class="btn btn-outline-light btn-sm disabled">Upgrade Plan</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 d-flex align-items-center justify-content-center">
+        <a href="/upload/" class="btn btn-secondary">Restart</a>
+    </div>
+</div>
+{% endblock %} 

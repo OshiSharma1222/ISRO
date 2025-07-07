@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Upload Images</h2>
+<form>
+    <div class="mb-3">
+        <label for="lr1" class="form-label">Low-Res Image 1</label>
+        <input class="form-control" type="file" id="lr1">
+    </div>
+    <div class="mb-3">
+        <label for="lr2" class="form-label">Low-Res Image 2</label>
+        <input class="form-control" type="file" id="lr2">
+    </div>
+    <div class="mb-3">
+        <label for="gt" class="form-label">High-Res Ground Truth (optional)</label>
+        <input class="form-control" type="file" id="gt">
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card bg-dark text-white">
+            <div class="card-body text-center">
+                <p class="card-text">Preview: LR Image 1</p>
+                <img src="https://via.placeholder.com/150x150?text=LR1" class="img-fluid rounded" alt="LR1 Preview">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-dark text-white">
+            <div class="card-body text-center">
+                <p class="card-text">Preview: LR Image 2</p>
+                <img src="https://via.placeholder.com/150x150?text=LR2" class="img-fluid rounded" alt="LR2 Preview">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-dark text-white">
+            <div class="card-body text-center">
+                <p class="card-text">Preview: GT (optional)</p>
+                <img src="https://via.placeholder.com/150x150?text=GT" class="img-fluid rounded" alt="GT Preview">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

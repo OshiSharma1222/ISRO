@@ -15,6 +15,11 @@
         <h2 class="text-center mb-4" style="color:#00eaff;">Login</h2>
         <form method="post" novalidate>
             {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-warning text-center" style="background:rgba(255,215,0,0.08); color:#ffd700; border:none;">
+                    Looks like you don't have an account, please <a href="/signup/" style="color:#00eaff; text-decoration:underline;">sign up first</a>.
+                </div>
+            {% endif %}
             {% for field in form %}
                 <div class="mb-3">
                     <label class="form-label" style="color:#ffd700;">{{ field.label }}</label>

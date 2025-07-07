@@ -8,25 +8,89 @@
         pointer-events: none;
         display: block;
     }
+    .login-planet {
+        position: absolute;
+        border-radius: 50%;
+        z-index: 1;
+        opacity: 0.7;
+        filter: blur(0.5px);
+    }
+    .login-planet1 {
+        width: 60px; height: 60px;
+        left: -40px; top: 30px;
+        background: radial-gradient(circle at 30% 30%, #00eaff 70%, #23272b 100%);
+        box-shadow: 0 0 32px 8px #00eaff44;
+    }
+    .login-planet2 {
+        width: 40px; height: 40px;
+        right: -30px; top: 80px;
+        background: radial-gradient(circle at 60% 60%, #ffd700 60%, #23272b 100%);
+        box-shadow: 0 0 24px 6px #ffd70044;
+    }
+    .login-planet3 {
+        width: 30px; height: 30px;
+        left: 20px; bottom: -20px;
+        background: radial-gradient(circle at 70% 30%, #ff6ec4 70%, #23272b 100%);
+        box-shadow: 0 0 16px 4px #ff6ec444;
+    }
+    .login-form-center .form-label {
+        margin-bottom: 0;
+        margin-right: 1rem;
+        min-width: 80px;
+        text-align: right;
+        font-size: 1.08rem;
+        color: #ffd700;
+        align-self: center;
+    }
+    .login-form-center .form-group-flex {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .login-form-center input,
+    .login-form-center select,
+    .login-form-center textarea {
+        width: 90%;
+        max-width: 320px;
+        min-width: 120px;
+        text-align: center !important;
+        margin-left: 0;
+        margin-right: 0;
+        display: block;
+    }
 </style>
 <canvas id="star-canvas" class="star-canvas-bg"></canvas>
-<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh; position: relative; z-index: 2;">
-    <div class="card p-4 shadow-lg" style="background:rgba(35,39,43,0.98); border-radius:1rem; min-width:350px; max-width:400px;">
-        <h2 class="text-center mb-4" style="color:#00eaff;">Login</h2>
-        <form method="post" novalidate>
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh; position: relative; z-index: 2; flex-direction: column;">
+    <dotlottie-player
+      src="https://lottie.host/6b7ed1b1-36ec-4f7e-92d0-52f45e7f32ae/k5mzhI50E3.lottie"
+      background="transparent"
+      speed="1"
+      style="width: 150px; height: 150px; margin-bottom: 1.5rem;"
+      loop
+      autoplay
+    ></dotlottie-player>
+    <div class="card shadow-lg" style="background:rgba(35,39,43,0.98); border-radius:1rem; min-width:350px; max-width:400px; padding: 2.5rem 2rem 2rem 2rem; position: relative; overflow: visible;">
+        <div class="login-planet login-planet1"></div>
+        <div class="login-planet login-planet2"></div>
+        <div class="login-planet login-planet3"></div>
+        <h2 class="text-center mb-4" style="color:#00eaff; margin-bottom: 2.2rem !important;">Login</h2>
+        <form method="post" novalidate class="login-form-center">
             {% csrf_token %}
             {% for field in form %}
-                <div class="mb-3">
-                    <label class="form-label" style="color:#ffd700;">{{ field.label }}</label>
+                <div class="form-group-flex">
+                    <label class="form-label">{{ field.label }}</label>
                     {{ field }}
-                    {% if field.errors %}
-                        <div class="text-danger small">{{ field.errors|striptags }}</div>
-                    {% endif %}
                 </div>
+                {% if field.errors %}
+                    <div class="text-danger small" style="margin-top: -1rem; margin-bottom: 1rem; text-align: center;">{{ field.errors|striptags }}</div>
+                {% endif %}
             {% endfor %}
-            <button type="submit" class="btn btn-primary w-100" style="background:#00eaff; border:none;">Login</button>
+            <button type="submit" class="btn btn-primary w-100" style="background:#00eaff; border:none; padding: 0.75rem 0; font-size: 1.1rem; margin-top: 0.5rem;">Login</button>
         </form>
-        <div class="mt-3 text-center">
+        <div class="mt-4 text-center" style="margin-top: 2rem !important;">
             <span style="color:#b0eaff;">Don't have an account?</span> <a href="/signup/" style="color:#ffd700;">Sign up</a>
         </div>
     </div>

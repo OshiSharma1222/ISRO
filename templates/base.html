@@ -13,28 +13,73 @@
         .sidebar .nav-link:hover { color: #fff; background: #343a40; }
         .content { padding: 2rem; }
         footer { color: #adb5bd; }
+        .navbar-space {
+            background: linear-gradient(90deg, #232526 0%, #414345 100%);
+            box-shadow: 0 2px 8px #0004;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #fff !important;
+        }
+        .navbar-nav .nav-link {
+            color: #f1f1f1 !important;
+            margin-right: 1rem;
+        }
+        .navbar-nav .nav-link.active, .navbar-nav .nav-link:focus, .navbar-nav .nav-link:hover {
+            color: #ffd700 !important;
+        }
     </style>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <nav class="col-md-2 d-none d-md-block sidebar py-4">
-            <div class="position-sticky">
-                <ul class="nav flex-column">
+{% if landing %}
+    <!-- Top Navbar for Landing Page -->
+    <nav class="navbar navbar-expand-lg navbar-space">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">🛰️ Satellite Super-Resolution</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link {% if request.path == '/upload/' %}active{% endif %}" href="/upload/">Upload</a></li>
-                    <li class="nav-item"><a class="nav-link {% if request.path == '/preprocessing/' %}active{% endif %}" href="/preprocessing/">Preprocessing</a></li>
-                    <li class="nav-item"><a class="nav-link {% if request.path == '/superres/' %}active{% endif %}" href="/superres/">Super-Resolution</a></li>
-                    <li class="nav-item"><a class="nav-link {% if request.path == '/evaluation/' %}active{% endif %}" href="/evaluation/">Evaluation</a></li>
-                    <li class="nav-item"><a class="nav-link {% if request.path == '/results/' %}active{% endif %}" href="/results/">Results</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/upload/">Upload</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/preprocessing/">Preprocessing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/superres/">Super-Resolution</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/evaluation/">Evaluation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/results/">Results</a></li>
                 </ul>
             </div>
-        </nav>
-        <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
-            {% block content %}{% endblock %}
-        </main>
+        </div>
+    </nav>
+    <div class="container-fluid px-0 content">
+{% else %}
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block sidebar py-4">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a></li>
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/upload/' %}active{% endif %}" href="/upload/">Upload</a></li>
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/preprocessing/' %}active{% endif %}" href="/preprocessing/">Preprocessing</a></li>
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/superres/' %}active{% endif %}" href="/superres/">Super-Resolution</a></li>
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/evaluation/' %}active{% endif %}" href="/evaluation/">Evaluation</a></li>
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/results/' %}active{% endif %}" href="/results/">Results</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
+{% endif %}
+
+{% block content %}{% endblock %}
+
+{% if landing %}
     </div>
-</div>
+{% else %}
+            </div>
+        </div>
+    </div>
+{% endif %}
 <footer class="text-center py-3 mt-4">
     Satellite Super-Resolution Tool &copy; 2024 | <a href="#" class="text-decoration-none text-secondary">Docs</a> | <a href="#" class="text-decoration-none text-secondary">GitHub</a> | <a href="#" class="text-decoration-none text-secondary">Contact</a>
 </footer>

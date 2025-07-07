@@ -21,6 +21,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
     }
     .star {
         position: absolute;
@@ -253,10 +254,28 @@
         font-style: italic;
         color: #e0e6ed;
     }
+    /* Lottie absolute positioning */
+    .hero-lottie-abs {
+        position: absolute;
+        top: 8px;
+        left: 25%;
+        transform: translateX(-50%);
+        z-index: 10;
+        pointer-events: none;
+    }
 </style>
 <canvas id="star-canvas" class="star-canvas-bg"></canvas>
 
 <div class="space-bg">
+    <dotlottie-player
+      src="https://lottie.host/de9652e2-bf5f-4291-857a-f9e563df5f10/oTVMn5FOBU.lottie"
+      background="transparent"
+      speed="1"
+      style="width: 300px; height: 300px"
+      loop
+      autoplay
+      class="hero-lottie-abs"
+    ></dotlottie-player>
     <!-- Animated Stars -->
     {% for i in star_range %}
     <div class="star" id="star{{i}}"></div>
@@ -365,6 +384,7 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 <script>
 // --- STARFIELD ANIMATION ---
 const canvas = document.getElementById('star-canvas');

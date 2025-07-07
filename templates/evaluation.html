@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Evaluation</h2>
+<div class="row mb-4">
+    <div class="col-md-2">
+        <div class="card bg-dark text-white text-center mb-3">
+            <div class="card-body">
+                <h6 class="card-title">RMSE</h6>
+                <span class="display-6">0.123</span>
+                <span class="badge bg-success">Good</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-dark text-white text-center mb-3">
+            <div class="card-body">
+                <h6 class="card-title">PSNR</h6>
+                <span class="display-6">32.5</span>
+                <span class="badge bg-success">Excellent</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-dark text-white text-center mb-3">
+            <div class="card-body">
+                <h6 class="card-title">SSIM</h6>
+                <span class="display-6">0.91</span>
+                <span class="badge bg-success">High</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-dark text-white text-center mb-3">
+            <div class="card-body">
+                <h6 class="card-title">NIQE</h6>
+                <span class="display-6">4.2</span>
+                <span class="badge bg-warning">Fair</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-dark text-white text-center mb-3">
+            <div class="card-body">
+                <h6 class="card-title">BRISQUE</h6>
+                <span class="display-6">18.7</span>
+                <span class="badge bg-info">Info</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="my-5">
+    <h5>Slider Comparison</h5>
+    <div class="bg-dark rounded p-3 text-center">
+        <!-- Placeholder for slider comparison -->
+        <img src="https://via.placeholder.com/400x200?text=Original+vs+Super-Resolved" class="img-fluid rounded" alt="Slider Comparison">
+    </div>
+</div>
+{% endblock %} 

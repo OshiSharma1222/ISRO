@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Satellite Super-Resolution Tool</h1>
+        <p class="lead">Enhance your satellite images with state-of-the-art super-resolution models.</p>
+        <a href="/upload/" class="btn btn-primary btn-lg mt-3">Launch Tool</a>
+    </div>
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <h3>Features</h3>
+            <ul>
+                <li>Dual Input: Upload two low-resolution satellite images</li>
+                <li>Deep Learning & Classical Models</li>
+                <li>Comprehensive Metrics: RMSE, PSNR, SSIM, NIQE, BRISQUE</li>
+                <li>Professional, dark-themed UI</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3>Technologies Used</h3>
+            <span class="badge bg-secondary m-1">TensorFlow</span>
+            <span class="badge bg-secondary m-1">PyTorch</span>
+            <span class="badge bg-secondary m-1">OpenCV</span>
+            <span class="badge bg-secondary m-1">scikit-image</span>
+            <span class="badge bg-secondary m-1">Django</span>
+        </div>
+    </div>
+    <div class="mb-5">
+        <h3>Workflow</h3>
+        <div class="bg-dark rounded p-3">
+            <!-- Placeholder for workflow diagram -->
+            <img src="https://via.placeholder.com/700x120?text=Workflow+Diagram" class="img-fluid" alt="Workflow Diagram">
+        </div>
+        <ul class="list-inline mt-3 text-center">
+            <li class="list-inline-item">Upload</li>
+            <li class="list-inline-item">→ Preprocess</li>
+            <li class="list-inline-item">→ Super-Resolve</li>
+            <li class="list-inline-item">→ Evaluate</li>
+            <li class="list-inline-item">→ Results</li>
+        </ul>
+    </div>
+</div>
+{% endblock %} 

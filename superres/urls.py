@@ -26,4 +26,6 @@ urlpatterns = [
     path('superres/', views.superres, name='superres'),
     path('evaluation/', views.evaluation, name='evaluation'),
     path('results/', views.results, name='results'),
+    path('signup/', views.signup, name='signup'),
+    path('login/', views.login_view, name='login'),
 ]

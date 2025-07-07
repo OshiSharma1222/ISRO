@@ -48,6 +48,10 @@
                     <li class="nav-item"><a class="nav-link" href="/superres/">Super-Resolution</a></li>
                     <li class="nav-item"><a class="nav-link" href="/evaluation/">Evaluation</a></li>
                     <li class="nav-item"><a class="nav-link" href="/results/">Results</a></li>
+                    {% if not request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="/login/">Login</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/signup/' %}active{% endif %}" href="/signup/">Sign Up</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -65,6 +69,10 @@
                         <li class="nav-item"><a class="nav-link {% if request.path == '/superres/' %}active{% endif %}" href="/superres/">Super-Resolution</a></li>
                         <li class="nav-item"><a class="nav-link {% if request.path == '/evaluation/' %}active{% endif %}" href="/evaluation/">Evaluation</a></li>
                         <li class="nav-item"><a class="nav-link {% if request.path == '/results/' %}active{% endif %}" href="/results/">Results</a></li>
+                        {% if not request.user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="/login/">Login</a></li>
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/signup/' %}active{% endif %}" href="/signup/">Sign Up</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </nav>

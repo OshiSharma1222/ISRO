@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="card shadow-lg p-4" style="background:rgba(35,39,43,0.98); border-radius:1rem; max-width:600px; margin:2rem auto;">
+        <h2 class="mb-3" style="color:#00eaff;">Welcome, {{ request.user.username }}!</h2>
+        <p style="color:#b0eaff;">This is your dashboard. You can now access all features of the Satellite Super-Resolution Tool.</p>
+        <a href="/upload/" class="btn btn-primary mt-3" style="background:#00eaff; border:none;">Go to Upload</a>
+    </div>
+</div>
+{% endblock %} 

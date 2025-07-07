@@ -24,13 +24,16 @@ def evaluation(request):
 def results(request):
     return render(request, 'results.html')
 
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
-            return redirect('/')
+            return redirect('/dashboard/')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
@@ -41,7 +44,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             auth_login(request, user)
-            return redirect('/')
+            return redirect('/dashboard/')
     else:
         form = CustomAuthenticationForm()
     return render(request, 'login.html', {'form': form})

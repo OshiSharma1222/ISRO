@@ -20,9 +20,4 @@ from core import views
 urlpatterns = [
     path('', views.landing, name='landing'),
     path('upload/', views.upload, name='upload'),
-    path('preprocessing/', views.preprocessing, name='preprocessing'),
-    path('superres/', views.superres, name='superres'),
-    path('evaluation/', views.evaluation, name='evaluation'),
-    path('results/', views.results, name='results'),
-    path('dashboard/', views.dashboard, name='dashboard'),
 ]

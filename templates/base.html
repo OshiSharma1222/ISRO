@@ -51,6 +51,15 @@
                     {% if not request.user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="/login/">Login</a></li>
                     <li class="nav-item"><a class="nav-link {% if request.path == '/signup/' %}active{% endif %}" href="/signup/">Sign Up</a></li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center {% if request.path == '/profile/' %}active{% endif %}" href="/profile/">
+                            <span style="font-size:1.3em; margin-right:0.3em;">👤</span> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout/">Logout</a>
+                    </li>
                     {% endif %}
                 </ul>
             </div>
@@ -72,6 +81,15 @@
                         {% if not request.user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="/login/">Login</a></li>
                         <li class="nav-item"><a class="nav-link {% if request.path == '/signup/' %}active{% endif %}" href="/signup/">Sign Up</a></li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center {% if request.path == '/profile/' %}active{% endif %}" href="/profile/">
+                                <span style="font-size:1.3em; margin-right:0.3em;">👤</span> Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout/">Logout</a>
+                        </li>
                         {% endif %}
                     </ul>
                 </div>

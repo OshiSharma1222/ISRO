@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="card shadow-lg p-4" style="background:rgba(35,39,43,0.98); border-radius:1rem; max-width:600px; margin:2rem auto;">
+        <h2 class="mb-3" style="color:#00eaff;">👤 Profile</h2>
+        <p style="color:#ffd700;"><strong>Username:</strong> {{ request.user.username }}</p>
+        <p style="color:#b0eaff;"><strong>Email:</strong> {{ request.user.email }}</p>
+        <a href="/dashboard/" class="btn btn-primary mt-3" style="background:#00eaff; border:none;">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %} 

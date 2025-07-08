@@ -1,20 +1,131 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Upload Images</h2>
+<style>
+    .star-canvas-bg {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        display: block;
+    }
+    .upload-cards-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 2.5rem;
+        gap: 2.5rem;
+    }
+    .upload-card {
+        background: linear-gradient(135deg, rgba(35,39,43,0.98) 80%, #23272b 100%);
+        border-radius: 1.5rem;
+        padding: 2.7rem 2rem 2rem 2rem;
+        width: 100%;
+        max-width: 370px;
+        min-height: 260px;
+        box-shadow: 0 8px 32px #00eaff33, 0 2px 16px #0003;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 2.5px solid #00eaff;
+        position: relative;
+        z-index: 1;
+        transition: transform 0.2s, box-shadow 0.2s;
+        overflow: hidden;
+    }
+    .upload-card:hover {
+        transform: translateY(-8px) scale(1.04);
+        box-shadow: 0 12px 48px #00eaff55, 0 4px 24px #0004;
+        border-color: #ffd700;
+    }
+    .upload-card .upload-icon {
+        font-size: 2.7rem;
+        margin-bottom: 1.1rem;
+        color: #00eaff;
+        filter: drop-shadow(0 0 8px #00eaff88);
+    }
+    .upload-card label {
+        color: #ffd700;
+        font-weight: 700;
+        margin-bottom: 1.1rem;
+        font-size: 1.18rem;
+        letter-spacing: 0.5px;
+    }
+    .upload-card input[type="file"] {
+        background: #181a1b;
+        color: #fff;
+        border: 1.5px solid #00eaff;
+        border-radius: 0.7rem;
+        padding: 0.8rem;
+        width: 100%;
+        font-size: 1.08rem;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 2px 8px #00eaff22;
+    }
+    .upload-card input[type="file"]:focus {
+        border-color: #ffd700;
+        outline: none;
+        box-shadow: 0 0 0 2px #ffd70044;
+    }
+    @media (max-width: 900px) {
+        .upload-cards-row { flex-direction: column; align-items: center; gap: 2rem; }
+        .upload-card { margin: 0 0 2rem 0; }
+    }
+    .upload-heading {
+        color: #00eaff;
+        font-size: 2.5rem;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 4px 32px #00eaff33, 0 1px 0 #000;
+    }
+    .upload-subheading {
+        color: #b0eaff;
+        font-size: 1.18rem;
+        text-align: center;
+        margin-bottom: 2.5rem;
+        text-shadow: 0 2px 12px #00eaff22;
+    }
+    .upload-btn {
+        background: linear-gradient(90deg, #00eaff 0%, #00ffd0 100%);
+        color: #181a1b;
+        border: none;
+        font-weight: 700;
+        font-size: 1.25rem;
+        border-radius: 0.7rem;
+        padding: 0.9rem 3.5rem;
+        box-shadow: 0 2px 16px #00eaff33;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .upload-btn:hover {
+        background: linear-gradient(90deg, #ffd700 0%, #00eaff 100%);
+        color: #23272b;
+        box-shadow: 0 6px 32px #ffd70044;
+    }
+</style>
+<canvas id="star-canvas" class="star-canvas-bg"></canvas>
+<div class="upload-heading">Upload Your Satellite Images</div>
+<div class="upload-subheading">Select your low-res and (optionally) high-res images to begin the super-resolution journey!</div>
 <form>
-    <div class="mb-3">
-        <label for="lr1" class="form-label">Low-Res Image 1</label>
-        <input class="form-control" type="file" id="lr1">
+    <div class="upload-cards-row">
+        <div class="upload-card">
+            <div class="upload-icon">🛰️</div>
+            <label for="lr1">Low-Res Image 1</label>
+            <input class="form-control" type="file" id="lr1">
+        </div>
+        <div class="upload-card">
+            <div class="upload-icon">🌌</div>
+            <label for="lr2">Low-Res Image 2</label>
+            <input class="form-control" type="file" id="lr2">
+        </div>
+        <div class="upload-card">
+            <div class="upload-icon">🔭</div>
+            <label for="gt">High-Res Ground Truth (optional)</label>
+            <input class="form-control" type="file" id="gt">
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="lr2" class="form-label">Low-Res Image 2</label>
-        <input class="form-control" type="file" id="lr2">
+    <div class="text-center mb-4">
+        <button type="submit" class="upload-btn">Upload</button>
     </div>
-    <div class="mb-3">
-        <label for="gt" class="form-label">High-Res Ground Truth (optional)</label>
-        <input class="form-control" type="file" id="gt">
-    </div>
-    <button type="submit" class="btn btn-primary">Upload</button>
 </form>
 <div class="row mt-4">
     <div class="col-md-4">
@@ -42,4 +153,102 @@
         </div>
     </div>
 </div>
+<script>
+// Starfield with subtle, realistic constellation clusters
+const canvas = document.getElementById('star-canvas');
+const ctx = canvas.getContext('2d');
+let w = window.innerWidth, h = window.innerHeight;
+canvas.width = w; canvas.height = h;
+function resizeCanvas() {
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w; canvas.height = h;
+}
+window.addEventListener('resize', resizeCanvas);
+function Star(x, y) {
+    this.x = x !== undefined ? x : Math.random() * w;
+    this.y = y !== undefined ? y : Math.random() * h;
+    this.radius = Math.random() * 0.9 + 0.2;
+    this.speed = Math.random() * 0.04 + 0.01;
+    this.alpha = Math.random() * 0.3 + 0.2;
+    this.twinkle = Math.random() * 0.3 + 0.2;
+    this.twinkleSpeed = Math.random() * 0.01 + 0.005;
+    this.baseAlpha = this.alpha;
+}
+Star.prototype.update = function() {
+    this.x += this.speed;
+    if (this.x > w) this.x = 0;
+    this.alpha = this.baseAlpha + Math.sin(Date.now() * this.twinkleSpeed + this.x) * this.twinkle * 0.5;
+};
+Star.prototype.draw = function(ctx) {
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = '#fff';
+    ctx.shadowBlur = 6;
+    ctx.fill();
+    ctx.restore();
+};
+const STAR_COUNT = 100;
+let stars = [];
+for (let i = 0; i < STAR_COUNT; i++) stars.push(new Star());
+// Define a few small clusters (constellations) with short lines
+const clusters = [
+    [
+        new Star(w*0.18, h*0.22),
+        new Star(w*0.21, h*0.25),
+        new Star(w*0.19, h*0.28)
+    ],
+    [
+        new Star(w*0.65, h*0.60),
+        new Star(w*0.68, h*0.62),
+        new Star(w*0.66, h*0.65),
+        new Star(w*0.69, h*0.64)
+    ],
+    [
+        new Star(w*0.45, h*0.15),
+        new Star(w*0.47, h*0.18),
+        new Star(w*0.49, h*0.16)
+    ]
+];
+function drawClusters(ctx, clusters) {
+    ctx.save();
+    ctx.strokeStyle = '#00eaff';
+    ctx.globalAlpha = 0.18;
+    ctx.lineWidth = 1.1;
+    clusters.forEach(cluster => {
+        for (let i = 0; i < cluster.length; i++) {
+            for (let j = i+1; j < cluster.length; j++) {
+                // Only connect if distance is short
+                const dx = cluster[i].x - cluster[j].x;
+                const dy = cluster[i].y - cluster[j].y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < 60) {
+                    ctx.beginPath();
+                    ctx.moveTo(cluster[i].x, cluster[i].y);
+                    ctx.lineTo(cluster[j].x, cluster[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    });
+    ctx.restore();
+}
+function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (let s of stars) {
+        s.update();
+        s.draw(ctx);
+    }
+    // Draw clusters
+    drawClusters(ctx, clusters);
+    // Draw cluster stars
+    clusters.forEach(cluster => {
+        cluster.forEach(s => s.draw(ctx));
+    });
+    requestAnimationFrame(animate);
+}
+animate();
+</script>
 {% endblock %} 

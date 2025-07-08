@@ -1,12 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
+    body {
+        font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(135deg, #181a1b 60%, #23272b 100%);
+        min-height: 100vh;
+    }
     .star-canvas-bg {
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
         z-index: 0;
         pointer-events: none;
         display: block;
+    }
+    .upload-heading {
+        color: #00eaff;
+        font-size: 2.8rem;
+        font-weight: 900;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 4px 32px #00eaff33, 0 1px 0 #000;
+        letter-spacing: 1px;
+    }
+    .upload-subheading {
+        color: #b0eaff;
+        font-size: 1.18rem;
+        text-align: center;
+        margin-bottom: 2.5rem;
+        text-shadow: 0 2px 12px #00eaff22;
+    }
+    .upload-tip {
+        color: #ffd700;
+        font-size: 1.05rem;
+        text-align: center;
+        margin-bottom: 2.2rem;
+        letter-spacing: 0.2px;
+        font-style: italic;
     }
     .upload-cards-row {
         display: flex;
@@ -16,140 +45,159 @@
         gap: 2.5rem;
     }
     .upload-card {
-        background: linear-gradient(135deg, rgba(35,39,43,0.98) 80%, #23272b 100%);
+        background: rgba(35,39,43,0.98);
         border-radius: 1.5rem;
         padding: 2.7rem 2rem 2rem 2rem;
         width: 100%;
-        max-width: 370px;
+        max-width: 400px;
         min-height: 260px;
         box-shadow: 0 8px 32px #00eaff33, 0 2px 16px #0003;
         display: flex;
         flex-direction: column;
         align-items: center;
-        border: 2.5px solid #00eaff;
+        border: 3px solid #00eaff;
         position: relative;
         z-index: 1;
-        transition: transform 0.2s, box-shadow 0.2s;
+        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
         overflow: hidden;
+        margin: 0 auto;
+        background-clip: padding-box;
+        outline: 2px solid #23272b;
+        outline-offset: 6px;
+        animation: cardGlow 2.5s infinite alternate;
+    }
+    @keyframes cardGlow {
+        0% { box-shadow: 0 0 32px #00eaff55, 0 2px 16px #0003; border-color: #00eaff; }
+        100% { box-shadow: 0 0 48px #ffd70077, 0 2px 16px #0003; border-color: #ffd700; }
     }
     .upload-card:hover {
         transform: translateY(-8px) scale(1.04);
-        box-shadow: 0 12px 48px #00eaff55, 0 4px 24px #0004;
+        box-shadow: 0 12px 48px #ffd70099, 0 4px 24px #0004;
         border-color: #ffd700;
+        background: rgba(35,39,43,0.99);
     }
     .upload-card .upload-icon {
-        font-size: 2.7rem;
+        font-size: 3.2rem;
         margin-bottom: 1.1rem;
         color: #00eaff;
-        filter: drop-shadow(0 0 8px #00eaff88);
+        filter: drop-shadow(0 0 12px #00eaff88);
+        text-shadow: 0 2px 12px #00eaff44;
     }
     .upload-card label {
         color: #ffd700;
         font-weight: 700;
         margin-bottom: 1.1rem;
-        font-size: 1.18rem;
+        font-size: 1.22rem;
         letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    .upload-card label:hover {
+        color: #00eaff;
     }
     .upload-card input[type="file"] {
-        background: #181a1b;
-        color: #fff;
-        border: 1.5px solid #00eaff;
-        border-radius: 0.7rem;
-        padding: 0.8rem;
+        display: none;
+    }
+    #drop-area {
+        border: 2.5px dashed #ffd700;
+        background: rgba(24,26,27,0.98);
+        padding: 2.2rem 1.5rem;
+        border-radius: 1.2rem;
         width: 100%;
-        font-size: 1.08rem;
-        margin-bottom: 0.5rem;
-        box-shadow: 0 2px 8px #00eaff22;
-    }
-    .upload-card input[type="file"]:focus {
-        border-color: #ffd700;
+        max-width: 350px;
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: border-color 0.2s, background 0.2s;
+        margin: 0 auto;
+        margin-bottom: 1.2rem;
         outline: none;
-        box-shadow: 0 0 0 2px #ffd70044;
     }
-    @media (max-width: 900px) {
-        .upload-cards-row { flex-direction: column; align-items: center; gap: 2rem; }
-        .upload-card { margin: 0 0 2rem 0; }
+    #drop-area:hover, #drop-area:focus {
+        border-color: #00eaff;
+        background: rgba(35,39,43,0.99);
     }
-    .upload-heading {
-        color: #00eaff;
-        font-size: 2.5rem;
-        font-weight: 800;
-        text-align: center;
-        margin-bottom: 0.5rem;
-        text-shadow: 0 4px 32px #00eaff33, 0 1px 0 #000;
-    }
-    .upload-subheading {
+    #file-list {
+        margin-top: 1rem;
         color: #b0eaff;
-        font-size: 1.18rem;
+        font-size: 1.08rem;
+        font-weight: 600;
         text-align: center;
-        margin-bottom: 2.5rem;
-        text-shadow: 0 2px 12px #00eaff22;
+    }
+    #preview-list {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+    }
+    #preview-list img {
+        max-width: 80px;
+        max-height: 80px;
+        border-radius: 10px;
+        box-shadow: 0 2px 12px #00eaff55;
+        border: 2px solid #23272b;
+        background: #181a1b;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #preview-list img:hover {
+        transform: scale(1.08) rotate(-2deg);
+        box-shadow: 0 6px 24px #ffd70077;
+        border-color: #ffd700;
     }
     .upload-btn {
         background: linear-gradient(90deg, #00eaff 0%, #00ffd0 100%);
         color: #181a1b;
         border: none;
-        font-weight: 700;
+        font-weight: 800;
         font-size: 1.25rem;
-        border-radius: 0.7rem;
-        padding: 0.9rem 3.5rem;
+        border-radius: 0.9rem;
+        padding: 1.1rem 3.5rem;
         box-shadow: 0 2px 16px #00eaff33;
-        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+        margin-top: 1.2rem;
+        letter-spacing: 0.5px;
     }
     .upload-btn:hover {
         background: linear-gradient(90deg, #ffd700 0%, #00eaff 100%);
         color: #23272b;
         box-shadow: 0 6px 32px #ffd70044;
+        transform: translateY(-2px) scale(1.04);
+    }
+    @media (max-width: 900px) {
+        .upload-cards-row { flex-direction: column; align-items: center; gap: 2rem; }
+        .upload-card { margin: 0 0 2rem 0; }
+        #drop-area { max-width: 98vw; }
     }
 </style>
 <canvas id="star-canvas" class="star-canvas-bg"></canvas>
 <div class="upload-heading">Upload Your Satellite Images</div>
-<div class="upload-subheading">Select your low-res and (optionally) high-res images to begin the super-resolution journey!</div>
-<form>
-    <div class="upload-cards-row">
-        <div class="upload-card">
+<div class="upload-subheading">Select one or more images to begin the super-resolution journey!</div>
+<div class="upload-tip">Tip: Hold <b>Ctrl</b> (or <b>Cmd</b> on Mac) to select multiple files at once, or repeat the process to add more files.</div>
+<div id="upload-section">
+    <div class="upload-cards-row" style="justify-content: center;">
+        <div class="upload-card" id="drop-area">
             <div class="upload-icon">🛰️</div>
-            <label for="lr1">Low-Res Image 1</label>
-            <input class="form-control" type="file" id="lr1">
-        </div>
-        <div class="upload-card">
-            <div class="upload-icon">🌌</div>
-            <label for="lr2">Low-Res Image 2</label>
-            <input class="form-control" type="file" id="lr2">
-        </div>
-        <div class="upload-card">
-            <div class="upload-icon">🔭</div>
-            <label for="gt">High-Res Ground Truth (optional)</label>
-            <input class="form-control" type="file" id="gt">
+            <label for="fileElem">Drag & drop files here or click to select</label>
+            <input class="form-control" type="file" id="fileElem" multiple style="display:none;">
+            <div id="file-list" style="margin-top:1rem; color:#b0eaff;"></div>
+            <div id="preview-list" style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:10px;"></div>
         </div>
     </div>
     <div class="text-center mb-4">
-        <button type="submit" class="upload-btn">Upload</button>
+        <button id="upload-btn" class="upload-btn">Upload</button>
     </div>
-</form>
-<div class="row mt-4">
-    <div class="col-md-4">
-        <div class="card bg-dark text-white">
-            <div class="card-body text-center">
-                <p class="card-text">Preview: LR Image 1</p>
-                <img src="https://via.placeholder.com/150x150?text=LR1" class="img-fluid rounded" alt="LR1 Preview">
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card bg-dark text-white">
-            <div class="card-body text-center">
-                <p class="card-text">Preview: LR Image 2</p>
-                <img src="https://via.placeholder.com/150x150?text=LR2" class="img-fluid rounded" alt="LR2 Preview">
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card bg-dark text-white">
-            <div class="card-body text-center">
-                <p class="card-text">Preview: GT (optional)</p>
-                <img src="https://via.placeholder.com/150x150?text=GT" class="img-fluid rounded" alt="GT Preview">
-            </div>
+</div>
+<div id="evaluate-section" style="display:none;">
+    <div class="upload-cards-row" style="justify-content: center;">
+        <div class="upload-card">
+            <div class="upload-icon">✅</div>
+            <div style="color:#ffd700; font-weight:700; margin-bottom:1rem;">Files uploaded successfully!</div>
+            <div id="uploaded-files" style="color:#b0eaff;"></div>
+            <button id="evaluate-btn" class="upload-btn" style="margin-top:1.5rem;">Evaluate</button>
         </div>
     </div>
 </div>
@@ -250,5 +298,77 @@ function animate() {
     requestAnimationFrame(animate);
 }
 animate();
+
+// Drag and drop logic
+const dropArea = document.getElementById('drop-area');
+const fileElem = document.getElementById('fileElem');
+const fileList = document.getElementById('file-list');
+const uploadBtn = document.getElementById('upload-btn');
+const uploadSection = document.getElementById('upload-section');
+const evaluateSection = document.getElementById('evaluate-section');
+const uploadedFiles = document.getElementById('uploaded-files');
+let files = [];
+
+dropArea.addEventListener('click', () => fileElem.click());
+dropArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropArea.style.borderColor = '#ffd700';
+});
+dropArea.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    dropArea.style.borderColor = '#00eaff';
+});
+dropArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropArea.style.borderColor = '#00eaff';
+    const newFiles = Array.from(e.dataTransfer.files);
+    files = files.concat(newFiles.filter(f => !files.some(existing => existing.name === f.name && existing.size === f.size)));
+    showFileList();
+});
+fileElem.addEventListener('change', (e) => {
+    const newFiles = Array.from(e.target.files);
+    files = files.concat(newFiles.filter(f => !files.some(existing => existing.name === f.name && existing.size === f.size)));
+    showFileList();
+    fileElem.value = '';
+});
+function showFileList() {
+    const previewList = document.getElementById('preview-list');
+    if (files.length === 0) {
+        fileList.textContent = '';
+        previewList.innerHTML = '';
+    } else {
+        fileList.innerHTML = `<strong>${files.length} image(s) selected</strong>`;
+        previewList.innerHTML = '';
+        files.forEach(f => {
+            if (f.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.maxWidth = '70px';
+                    img.style.maxHeight = '70px';
+                    img.style.borderRadius = '8px';
+                    img.style.boxShadow = '0 2px 8px #00eaff55';
+                    previewList.appendChild(img);
+                };
+                reader.readAsDataURL(f);
+            }
+        });
+    }
+}
+uploadBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (files.length === 0) {
+        alert('Please select at least one file.');
+        return;
+    }
+    if (uploadSection.style.display === 'none') return; // Prevent double pop
+    uploadSection.style.display = 'none';
+    evaluateSection.style.display = 'block';
+    uploadedFiles.innerHTML = files.map(f => `<div>${f.name}</div>`).join('');
+});
+document.getElementById('evaluate-btn').addEventListener('click', () => {
+    alert('Evaluation started!');
+});
 </script>
 {% endblock %} 

@@ -35,19 +35,19 @@
         background: linear-gradient(135deg, #6dd5ed 0%, #2193b0 100%);
         box-shadow: 0 0 40px 10px #2193b0aa;
     }
-    .satellite {
+    .rocket {
         position: absolute;
         width: 100px;
         left: 80%;
         top: 40%;
-        z-index: 2;
+        z-index: 0;
     }
-    .rocket {
+    .satellite {
         position: absolute;
         width: 120px;
         left: 18%;
-        top: 60%;
-        z-index: 2;
+        top: 80%;
+        z-index: 0;
     }
     .hero-content {
         text-align: center;
@@ -257,11 +257,23 @@
     /* Lottie absolute positioning */
     .hero-lottie-abs {
         position: absolute;
-        top: 8px;
+        top: 4px;
         left: 25%;
         transform: translateX(-50%);
         z-index: 10;
         pointer-events: none;
+    }
+    .btn-gradient {
+        background: linear-gradient(90deg, #00d9ff 0%, #7ecfff 100%);
+        color: #fff !important;
+        border: none;
+        box-shadow: 0 4px 16px #00d9ff44;
+        transition: background 0.3s, box-shadow 0.3s;
+    }
+    .btn-gradient:hover, .btn-gradient:focus {
+        background: linear-gradient(90deg, #7ecfff 0%, #00d9ff 100%);
+        box-shadow: 0 8px 32px #00d9ff66;
+        color: #fff !important;
     }
 </style>
 <canvas id="star-canvas" class="star-canvas-bg"></canvas>
@@ -284,13 +296,11 @@
     <div class="planet" id="planet1" style="width: 60px; height: 60px; left: 10%; top: 20%;"></div>
     <div class="planet" id="planet2" style="width: 40px; height: 40px; left: 80%; top: 70%; background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);"></div>
     <!-- Satellite/Rocket SVGs -->
-    <img src="{% static 'assets/ISRO_-_Wikipedia-removebg-preview.png' %}" class="satellite" id="satellite" alt="Satellite">
-    <img src="{% static 'assets/download__3_-removebg-preview.png' %}" class="rocket" id="rocket" alt="Rocket">
+    <img src="{% static 'assets/ISRO_-_Wikipedia-removebg-preview.png' %}" class="rocket" id="rocket" alt="rocket">
+    <img src="{% static 'assets/download__3_-removebg-preview.png' %}" class="satellite" id="satellite" alt="satellite">
     <div class="hero-content">
         <h1 class="hero-title" id="hero-title">Explore the Universe of Satellite Super-Resolution</h1>
-        <div class="hero-tagline">AI-powered enhancement for your satellite images</div>
-        <p class="hero-sub" id="hero-sub">Upload low-res satellite images and let AI reveal the unseen details.</p>
-        <a href="/upload/" class="btn btn-lg btn-primary px-5 py-3 shadow" id="cta-btn">Get Started</a>
+        <a href="/upload/" class="btn btn-lg btn-gradient px-5 py-3 shadow" id="cta-btn" style="margin-top:20px;">Upload Pictures</a>
     </div>
 </div>
 
@@ -322,38 +332,6 @@
             <div class="step-icon">⬇️</div>
             <div class="step-title">Download</div>
             <div class="step-desc">Save your enhanced images for further use.</div>
-        </div>
-    </div>
-</div>
-
-<!-- Features Section -->
-<div class="features-section">
-    <div class="features-title">Features</div>
-    <div class="feature-cards">
-        <div class="feature-card">
-            <div class="feature-icon">🔄</div>
-            <div class="feature-title">Dual Input</div>
-            <div class="feature-desc">Upload and compare two satellite images side by side for best results.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🧠</div>
-            <div class="feature-title">AI & Classical Models</div>
-            <div class="feature-desc">Choose from deep learning or classical super-resolution techniques.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">📈</div>
-            <div class="feature-title">Comprehensive Metrics</div>
-            <div class="feature-desc">Evaluate with RMSE, PSNR, SSIM, NIQE, BRISQUE, and more.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🌙</div>
-            <div class="feature-title">Dark-Themed UI</div>
-            <div class="feature-desc">Enjoy a professional, eye-friendly interface for long sessions.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <div class="feature-title">Fast Processing</div>
-            <div class="feature-desc">Get results in seconds, even for large images.</div>
         </div>
     </div>
 </div>
@@ -675,29 +653,6 @@ if (window.gsap) {
             trigger: '.how-it-works',
             start: 'top 80%',
         }
-    });
-    // Animate Features
-    gsap.from('.feature-card', {
-        opacity: 0,
-        y: 40,
-        stagger: 0.12,
-        duration: 0.7,
-        ease: 'power2.out',
-        scrollTrigger: {
-            trigger: '.features-section',
-            start: 'top 80%',
-        }
-    });
-    // Floating/bobbing effect for feature cards
-    gsap.utils.toArray('.feature-card').forEach((card, i) => {
-        gsap.to(card, {
-            y: 18,
-            duration: 2.2 + Math.random(),
-            yoyo: true,
-            repeat: -1,
-            ease: 'sine.inOut',
-            delay: i * 0.18
-        });
     });
     // Animate Testimonials
     gsap.from('.testimonial-card', {
